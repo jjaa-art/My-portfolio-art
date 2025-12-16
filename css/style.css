@@ -161,14 +161,19 @@ h3 {
     position: static;
     /* Reset */
     transform: none;
-    font-size: 2rem;
+    font-size: 2.2rem;
+    /* Slightly larger */
     font-weight: 700;
-    letter-spacing: 0.2em;
-    font-family: var(--font-display);
+    letter-spacing: 0.15em;
+    font-family: 'Playfair Display', serif;
+    /* Luxury Serif */
     font-style: italic;
-    color: #1a1a1a !important;
-    /* Dark text */
-    text-shadow: none;
+    color: #bfa05f !important;
+    /* Muted Luxurious Gold */
+    background: linear-gradient(135deg, #d4af37 0%, #a67c00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .nav-links a {
