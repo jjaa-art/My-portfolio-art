@@ -2,28 +2,33 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // Hero Animation
+// Hero Animation (Vintage Projector)
 const initHeroAnimation = () => {
-    const tl = gsap.timeline();
-
-    tl.from(".hero-title .line", {
-        y: 100,
+    // Navbar entrance
+    gsap.from(".navbar", {
+        y: -20,
         opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power4.out"
-    })
-        .from(".hero-subtitle", {
-            y: 20,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power3.out"
-        }, "-=0.5")
-        .from(".navbar", {
-            y: -50,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power3.out"
-        }, "-=0.8");
+        duration: 1.5,
+        ease: "power2.out",
+        delay: 0.5
+    });
+
+    // Projector Beam Effect for Title
+    const title = document.querySelector('.hero-title');
+    const subtitle = document.querySelector('.hero-subtitle');
+
+    // Add class to trigger CSS animation
+    setTimeout(() => {
+        if (title) title.classList.add('projector-active');
+    }, 500); // Slight delay for dramatic effect
+
+    // Subtitle fade in slowly after title
+    gsap.to(subtitle, {
+        opacity: 1,
+        duration: 2,
+        delay: 2.5, // Wait for title beam to stabilize
+        ease: "power2.out"
+    });
 };
 
 // Scroll Animations
