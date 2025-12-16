@@ -220,7 +220,7 @@ const initScatterText = () => {
         });
     });
 
-    // 2. Sand Scatter (Hero Title) - Fix
+    // 2. Burning Text Effect (Hero Title)
     const heroTitleContainer = document.querySelector('.hero-title');
     if (heroTitleContainer) {
         // Prepare text
@@ -237,16 +237,18 @@ const initScatterText = () => {
             });
         });
 
-        // Hover Effect
+        // Hover Effect - Fire/Smoke Simulation
         heroTitleContainer.addEventListener('mouseenter', () => {
             heroTitleContainer.classList.add('scatter-active');
             const chars = heroTitleContainer.querySelectorAll('.char');
             chars.forEach(char => {
-                const x = (Math.random() - 0.5) * 200; // Wider disperse
-                const y = (Math.random() - 1) * 150 - 50; // Upward disperse
-                const r = (Math.random() - 0.5) * 180;
-                char.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(0.5)`;
-                char.style.opacity = '0'; // Disappear
+                // Smoke logic: Strong upward movement, slight drift
+                const x = (Math.random() - 0.5) * 60; // Narrower horizontal drift
+                const y = -100 - Math.random() * 100; // Move UP (-100 to -200px)
+                const r = (Math.random() - 0.5) * 45; // Slight rotation
+                const scale = 1 + Math.random() * 0.5; // Expand slightly like gas
+
+                char.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(${scale})`;
             });
         });
 
@@ -255,7 +257,6 @@ const initScatterText = () => {
             const chars = heroTitleContainer.querySelectorAll('.char');
             chars.forEach(char => {
                 char.style.transform = 'translate(0, 0) rotate(0) scale(1)';
-                char.style.opacity = '1';
             });
         });
     }
