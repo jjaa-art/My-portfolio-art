@@ -199,18 +199,29 @@ const initScatterText = () => {
     // 2. Burning Text Effect (Hero Title)
     const heroTitleContainer = document.querySelector('.hero-title');
     if (heroTitleContainer) {
-        // Prepare text
-        const lines = heroTitleContainer.querySelectorAll('.line');
-        lines.forEach(line => {
-            const text = line.innerText;
-            line.innerHTML = '';
-            [...text].forEach(char => {
-                const span = document.createElement('span');
-                span.innerText = char;
-                span.classList.add('char');
-                if (char === ' ') span.style.width = '0.3em';
-                line.appendChild(span);
-            });
+        // Prepare text - handle <br> and mixed content
+        const originalContent = Array.from(heroTitleContainer.childNodes);
+        heroTitleContainer.innerHTML = ''; // Clear content
+
+        originalContent.forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const text = node.textContent.trim();
+                if (text) {
+                    [...text].forEach(char => {
+                        const span = document.createElement('span');
+                        span.innerText = char;
+                        span.classList.add('char');
+                        if (char === ' ') span.style.width = '0.3em';
+                        heroTitleContainer.appendChild(span);
+                    });
+                }
+            } else if (node.nodeName === 'BR') {
+                heroTitleContainer.appendChild(document.createElement('br'));
+            } else {
+                // If it's another element (like span), keep it or process recursively
+                // For simplicity, treating as text container or appending directly
+                heroTitleContainer.appendChild(node.cloneNode(true));
+            }
         });
 
         // Hover Effect - Fire/Smoke Simulation
@@ -225,6 +236,8 @@ const initScatterText = () => {
                 const scale = 1 + Math.random() * 0.5; // Expand slightly like gas
 
                 char.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(${scale})`;
+                char.style.opacity = 0; // Fade out like smoke
+                char.style.filter = 'blur(10px)'; // Blur like smoke
             });
         });
 
@@ -233,6 +246,8 @@ const initScatterText = () => {
             const chars = heroTitleContainer.querySelectorAll('.char');
             chars.forEach(char => {
                 char.style.transform = 'translate(0, 0) rotate(0) scale(1)';
+                char.style.opacity = 1;
+                char.style.filter = 'blur(0)';
             });
         });
     }
