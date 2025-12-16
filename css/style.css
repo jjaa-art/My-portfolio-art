@@ -363,26 +363,7 @@ h3 {
     /* Brighter grey */
     font-family: var(--font-main);
     font-weight: 300;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-top: 20px;
-    opacity: 0;
-    animation: simpleFadeIn 1s ease-out forwards;
-    animation-delay: 1s;
-    /* Faster */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-    /* Shadow */
-}
-
-font-family: var(--font-main);
-font-weight: 300;
-letter-spacing: 0.2em;
-text-transform: uppercase;
-margin-top: 20px;
-opacity: 0;
-animation: simpleFadeIn 2s ease-out forwards;
-animation-delay: 2.5s;
-/* Wait for title */
+    /* Wait for title */
 }
 
 @keyframes simpleFadeIn {
