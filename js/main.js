@@ -194,48 +194,68 @@ const initParallax = () => {
 
 // Text Scatter Effect
 const initScatterText = () => {
-    const targets = document.querySelectorAll('.scatter-text');
-
-    targets.forEach(target => {
-        // Split text into characters
+    // 1. General Scatter (About, Skills, etc.) - Existing Logic
+    const generalTargets = document.querySelectorAll('.scatter-text');
+    generalTargets.forEach(target => {
         const text = target.innerText;
         target.innerHTML = '';
-
-        // Wrap each character in a span
         [...text].forEach(char => {
             const span = document.createElement('span');
             span.innerText = char;
             span.classList.add('char');
-            if (char === ' ') span.style.width = '0.3em'; // Preserve space width
+            if (char === ' ') span.style.width = '0.3em';
             target.appendChild(span);
-
-            // Add random scatter effect on hover
-            // We use JS to set random values to CSS variables or direct styles for the 'hover' state logic
-            // But since CSS :hover can't easily use random numbers per element without JS pre-calculation,
-            // we'll add event listeners to the PARENT (target) to trigger the children.
         });
-
         target.addEventListener('mouseenter', () => {
-            const chars = target.querySelectorAll('.char');
-            chars.forEach(char => {
-                // Random values for scatter
-                // x: -10 to 10px, y: -10 to 10px, rotate: -20 to 20deg
+            target.querySelectorAll('.char').forEach(char => {
                 const x = (Math.random() - 0.5) * 30;
                 const y = (Math.random() - 0.5) * 30;
                 const r = (Math.random() - 0.5) * 40;
-
                 char.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)`;
-                // Optional: Random color/opacity change
-                // char.style.opacity = 0.7 + Math.random() * 0.3;
             });
         });
-
         target.addEventListener('mouseleave', () => {
-            const chars = target.querySelectorAll('.char');
-            chars.forEach(char => {
+            target.querySelectorAll('.char').forEach(char => {
                 char.style.transform = 'translate(0, 0) rotate(0)';
             });
         });
+    });
+
+    // 2. Sand Scatter (Hero Title) - Specific Logic for "Sand" feel
+    const heroTitles = document.querySelectorAll('.hero-title .line'); // Target lines inside hero-title
+    heroTitles.forEach(target => {
+        const text = target.innerText;
+        target.innerHTML = '';
+        [...text].forEach(char => {
+            const span = document.createElement('span');
+            span.innerText = char;
+            span.classList.add('char');
+            if (char === ' ') span.style.width = '0.3em';
+            target.appendChild(span);
+        });
+
+        const heroTitleContainer = document.querySelector('.hero-title');
+
+        // Hover event on the whole title container to trigger all chars
+        if (heroTitleContainer) {
+            heroTitleContainer.addEventListener('mouseenter', () => {
+                target.querySelectorAll('.char').forEach(char => {
+                    // "Sand" dispersion: wider spread, blur (CSS), fade out
+                    const x = (Math.random() - 0.5) * 150; // Wide spread
+                    const y = (Math.random() - 1) * 100 - 50; // Move Upwards primarily (sand blowing away)
+                    const r = (Math.random() - 0.5) * 120; // High rotation
+
+                    char.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(${Math.random()})`;
+                    // Opacity and blur handled by CSS transition
+                });
+            });
+
+            heroTitleContainer.addEventListener('mouseleave', () => {
+                target.querySelectorAll('.char').forEach(char => {
+                    char.style.transform = 'translate(0, 0) rotate(0) scale(1)';
+                });
+            });
+        }
     });
 };
 
