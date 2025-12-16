@@ -262,6 +262,6 @@ window.addEventListener('load', () => {
 
     initCursor();
     initParallax();
-    initScatterText();
+    // initScatterText(); // DISABLED: Causing visibility issues
     initImageUpload();
 });
