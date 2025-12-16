@@ -6,11 +6,10 @@ gsap.registerPlugin(ScrollTrigger);
 const initHeroAnimation = () => {
     // Navbar entrance
     gsap.from(".navbar", {
-        y: -20,
+        y: -10,
         opacity: 0,
-        duration: 1.5,
-        ease: "power2.out",
-        delay: 0.5
+        duration: 2,
+        delay: 1.5 // Wait for TV turn on
     });
 
     // Projector Beam Effect for Title
@@ -20,13 +19,13 @@ const initHeroAnimation = () => {
     // Add class to trigger CSS animation
     setTimeout(() => {
         if (title) title.classList.add('projector-active');
-    }, 500); // Slight delay for dramatic effect
+    }, 500); // Slight delay for drama
 
     // Subtitle fade in slowly after title
     gsap.to(subtitle, {
         opacity: 1,
         duration: 2,
-        delay: 2.5, // Wait for title beam to stabilize
+        delay: 2.5,
         ease: "power2.out"
     });
 };
@@ -221,42 +220,45 @@ const initScatterText = () => {
         });
     });
 
-    // 2. Sand Scatter (Hero Title) - Specific Logic for "Sand" feel
-    const heroTitles = document.querySelectorAll('.hero-title .line'); // Target lines inside hero-title
-    heroTitles.forEach(target => {
-        const text = target.innerText;
-        target.innerHTML = '';
-        [...text].forEach(char => {
-            const span = document.createElement('span');
-            span.innerText = char;
-            span.classList.add('char');
-            if (char === ' ') span.style.width = '0.3em';
-            target.appendChild(span);
+    // 2. Sand Scatter (Hero Title) - Fix
+    const heroTitleContainer = document.querySelector('.hero-title');
+    if (heroTitleContainer) {
+        // Prepare text
+        const lines = heroTitleContainer.querySelectorAll('.line');
+        lines.forEach(line => {
+            const text = line.innerText;
+            line.innerHTML = '';
+            [...text].forEach(char => {
+                const span = document.createElement('span');
+                span.innerText = char;
+                span.classList.add('char');
+                if (char === ' ') span.style.width = '0.3em';
+                line.appendChild(span);
+            });
         });
 
-        const heroTitleContainer = document.querySelector('.hero-title');
-
-        // Hover event on the whole title container to trigger all chars
-        if (heroTitleContainer) {
-            heroTitleContainer.addEventListener('mouseenter', () => {
-                target.querySelectorAll('.char').forEach(char => {
-                    // "Sand" dispersion: wider spread, blur (CSS), fade out
-                    const x = (Math.random() - 0.5) * 150; // Wide spread
-                    const y = (Math.random() - 1) * 100 - 50; // Move Upwards primarily (sand blowing away)
-                    const r = (Math.random() - 0.5) * 120; // High rotation
-
-                    char.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(${Math.random()})`;
-                    // Opacity and blur handled by CSS transition
-                });
+        // Hover Effect
+        heroTitleContainer.addEventListener('mouseenter', () => {
+            heroTitleContainer.classList.add('scatter-active');
+            const chars = heroTitleContainer.querySelectorAll('.char');
+            chars.forEach(char => {
+                const x = (Math.random() - 0.5) * 200; // Wider disperse
+                const y = (Math.random() - 1) * 150 - 50; // Upward disperse
+                const r = (Math.random() - 0.5) * 180;
+                char.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(0.5)`;
+                char.style.opacity = '0'; // Disappear
             });
+        });
 
-            heroTitleContainer.addEventListener('mouseleave', () => {
-                target.querySelectorAll('.char').forEach(char => {
-                    char.style.transform = 'translate(0, 0) rotate(0) scale(1)';
-                });
+        heroTitleContainer.addEventListener('mouseleave', () => {
+            heroTitleContainer.classList.remove('scatter-active');
+            const chars = heroTitleContainer.querySelectorAll('.char');
+            chars.forEach(char => {
+                char.style.transform = 'translate(0, 0) rotate(0) scale(1)';
+                char.style.opacity = '1';
             });
-        }
-    });
+        });
+    }
 };
 
 // Image Upload Logic
