@@ -236,7 +236,7 @@ h3 {
 .hero-content {
     text-align: center;
     z-index: 1;
-    color: #fff;
+    /* color: #fff; Removed to allow children to control their color */
 }
 
 .hero-title {
@@ -248,7 +248,8 @@ h3 {
     font-weight: 400;
     font-style: italic;
     letter-spacing: -2px;
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+    /* text-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); Removed for cleaner look matching screenshot */
 }
 
 .hero-subtitle {
