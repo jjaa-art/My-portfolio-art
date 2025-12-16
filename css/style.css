@@ -130,17 +130,23 @@ h3 {
 
 .logo {
     position: absolute;
-    top: 30px;
-    left: 40px;
-    font-size: 1.5rem;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    /* Smaller but impactful */
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 0.5em;
+    /* Extremely wide spacing */
     font-family: var(--font-main);
-    /* Minimal Sans */
     font-style: normal;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.9);
     text-transform: uppercase;
     z-index: 100;
+    /* Optional: text-shadow for depth */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    /* Prevent wrapping */
 }
 
 /* Hide Search for this minimal aesthetic or move it */
@@ -204,7 +210,25 @@ h3 {
     width: 100%;
     height: 100%;
     z-index: 0;
-    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 80%);
+    /* Spotlight center, deep black edges */
+    background: radial-gradient(circle at center, #2a2a2a 0%, #151515 40%, #000000 85%);
+}
+
+/* Vignette Effect */
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    /* Above background, below text */
+    /* Strong vignette */
+    background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 100%);
+    mix-blend-mode: multiply;
+    /* Deepen the shadows */
 }
 
 /* Film Grain Effect */
