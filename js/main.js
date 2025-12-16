@@ -112,60 +112,7 @@ const initImageUpload = () => {
     }
 };
 
-// Modal Logic
-const initModal = () => {
-    const modal = document.getElementById('projectModal');
-    const closeBtn = document.querySelector('.close-modal');
-    const projectCards = document.querySelectorAll('.project-card');
 
-    // Elements to update in modal
-    const modalTitle = modal.querySelector('.modal-title');
-    const modalDesc = modal.querySelector('.modal-description');
-    const modalImg = modal.querySelector('.modal-image');
-
-    // Mock Data (In a real app, this could be an array of objects)
-    const projectDetails = {
-        "Immersive Gallery": {
-            desc: "A WebGL-powered 3D gallery experience allowing users to navigate through a virtual art space. Built with Three.js and GSAP.",
-            imgColor: "#FF9A9E" // Placeholder color
-        },
-        "Brand Identity": {
-            desc: "Complete digital rebranding for a fashion tech startup. Focused on interactive storytelling and micro-interactions to convey luxury.",
-            imgColor: "#FECFEF"
-        },
-        "E-Commerce Motion": {
-            desc: "High-conversion e-commerce landing page featuring scroll-triggered product reveals and seamless page transitions.",
-            imgColor: "#E0C097"
-        }
-    };
-
-    projectCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const title = card.querySelector('h3').innerText;
-            const details = projectDetails[title] || { desc: "Detailed project description coming soon.", imgColor: "#ddd" };
-
-            modalTitle.innerText = title;
-            modalDesc.innerText = details.desc;
-            modalImg.style.backgroundColor = details.imgColor; // Using color as placeholder
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        });
-    });
-
-    closeBtn.addEventListener('click', () => {
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    });
-
-    // Close on outside click
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-    });
-};
 
 // Custom Cursor Logic
 const initCursor = () => {
@@ -297,7 +244,7 @@ const initScatterText = () => {
 window.addEventListener('load', () => {
     initHeroAnimation();
     initScrollAnimations();
-    initModal();
+
     initCursor();
     initParallax();
     initScatterText();
