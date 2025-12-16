@@ -130,24 +130,22 @@ h3 {
 
 .logo {
     position: fixed;
-    /* Always visible as requested */
+    /* Always visible */
     top: 40px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 3rem;
-    /* Much larger */
     font-weight: 700;
     letter-spacing: 0.3em;
     font-family: var(--font-main);
-    color: #fff;
+    color: #ffffff !important;
+    /* Force White */
     text-transform: uppercase;
-    z-index: 1000;
-    /* Highest priority */
-    text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
-    mix-blend-mode: difference;
-    /* Ensures visibility on any bg */
+    z-index: 9999;
+    /* Max Z-index */
+    text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    /* Heavy shadow for contrast */
     pointer-events: none;
-    /* Let clicks pass through */
 }
 
 /* Hero Section - Vintage Film Style */
@@ -158,7 +156,39 @@ h3 {
     justify-content: center;
     position: relative;
     overflow: hidden;
-    background-color: var(--bg-color);
+    background-color: #000;
+    /* Start black */
+}
+
+/* CRT Turn On Animation on Container */
+.hero-content {
+    animation: tvTurnOn 0.8s ease-out forwards;
+    transform-origin: center;
+}
+
+@keyframes tvTurnOn {
+    0% {
+        transform: scale(1, 0.002);
+        filter: brightness(30) contrast(10);
+        opacity: 0;
+    }
+
+    30% {
+        transform: scale(1, 0.002);
+        filter: brightness(10) contrast(5);
+        opacity: 1;
+    }
+
+    60% {
+        transform: scale(1, 0.002);
+        filter: brightness(1);
+    }
+
+    100% {
+        transform: scale(1, 1);
+        filter: brightness(1);
+        opacity: 1;
+    }
 }
 
 .hero-background {
