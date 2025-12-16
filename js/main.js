@@ -291,26 +291,7 @@ const initScatterText = () => {
     }
 };
 
-// Image Upload Logic
-const initImageUpload = () => {
-    const input = document.getElementById('imageUpload');
-    const visualBox = document.getElementById('visual-box');
-
-    if (input && visualBox) {
-        input.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    visualBox.style.backgroundImage = `url(${event.target.result})`;
-                    // Remove placeholder background color if needed, or let bg-image cover it
-                    visualBox.style.backgroundColor = 'transparent';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-};
+// Image Upload Logic removed (Duplicate)
 
 // Initialize
 window.addEventListener('load', () => {
