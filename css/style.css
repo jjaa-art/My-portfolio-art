@@ -309,6 +309,7 @@ h3 {
 }
 
 /* Projector Beam Animation */
+/* Projector Beam Animation - REMOVED for visibility guarantee */
 .hero-title {
     font-family: 'Playfair Display', serif;
     font-size: 6rem;
@@ -316,60 +317,35 @@ h3 {
     margin-bottom: 30px;
     font-weight: 400;
     font-style: italic;
-    color: transparent;
-    /* Start transparent for effect */
+    color: #ffffff !important;
+    /* Force White */
     text-align: center;
     position: relative;
-    z-index: 20;
+    z-index: 100;
+    /* Boost Z-Index */
+    opacity: 1 !important;
+    /* Force Visible */
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    /* Strong Shadow */
 
-    /* Animation */
-    animation: projectorBeam 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    animation-delay: 0.2s;
-    opacity: 0;
-    /* Start hidden */
+    /* Animation Removed to prevent hiding */
+    transform: none;
+    filter: none;
 }
 
-@keyframes projectorBeam {
-    0% {
-        opacity: 0;
-        color: rgba(255, 255, 255, 0);
-        text-shadow: 0 0 50px rgba(255, 255, 255, 0.8);
-        filter: blur(20px);
-        transform: scale(0.95);
-    }
-
-    30% {
-        opacity: 0.5;
-        color: rgba(255, 255, 255, 0.8);
-        /* More visible earlier */
-        text-shadow: 0 0 30px rgba(255, 255, 255, 0.9);
-        filter: blur(10px);
-    }
-
-    100% {
-        opacity: 1;
-        color: #ffffff;
-        /* pure white */
-        text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        /* Shadow for contrast */
-        filter: blur(0);
-        transform: scale(1);
-    }
-}
+/* Keyframes removed */
 
 .hero-subtitle {
     font-size: 1.1rem;
-    color: #ccc;
-    /* Brighter grey */
+    color: #fff;
     font-family: var(--font-main);
     font-weight: 300;
-    /* Wait for title */
-}
-
-@keyframes simpleFadeIn {
-    to {
-        opacity: 0.7;
-    }
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 20px;
+    opacity: 1 !important;
+    /* Force Visible */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .scroll-indicator {
