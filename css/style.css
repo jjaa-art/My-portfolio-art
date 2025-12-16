@@ -1,18 +1,19 @@
 /* style.css */
 
 /* ---------------------------------------------------- */
-/* Global Setup: Clean Light Theme */
+/* Global Setup: Vintage Film Noir */
 /* ---------------------------------------------------- */
 
 /* Global Vars */
 :root {
-    --text-color: #1a1a1a;
-    --text-secondary: #4a4a4a;
-    --bg-color: #fcfbf9;
-    --accent-color: #d4af37;
+    --text-color: #e0e0e0;
+    /* Off-white for film feel */
+    --text-secondary: #888888;
+    --bg-color: #121212;
+    /* Tone-down Dark */
+    --accent-color: #ffffff;
     --font-main: 'Outfit', sans-serif;
     --font-display: 'Playfair Display', serif;
-    /* Luxury Serif */
 }
 
 * {
@@ -29,13 +30,55 @@ body {
     overflow-x: hidden;
     line-height: 1.6;
     cursor: auto;
-    /* Revert to default cursor */
+}
+
+/* Film Grain Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    animation: grainFlicker 8s steps(10) infinite;
+}
+
+@keyframes grainFlicker {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-5%, -5%);
+    }
+
+    20% {
+        transform: translate(5%, 5%);
+    }
+
+    30% {
+        transform: translate(-5%, 5%);
+    }
+
+    40% {
+        transform: translate(5%, -5%);
+    }
+
+    50% {
+        transform: translate(0, 0);
+    }
 }
 
 a {
     text-decoration: none;
     color: inherit;
-    transition: color 0.3s;
+    transition: opacity 0.3s;
 }
 
 ul {
@@ -62,8 +105,10 @@ h1,
 h2,
 h3 {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 400;
+    /* Minimal weight */
     color: var(--text-color);
+    letter-spacing: -0.02em;
 }
 
 /* Layout Utilities */
@@ -85,16 +130,15 @@ h3 {
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
-    background-color: #fcfbf9;
-    /* Beige/Off-white */
+    height: 100px;
+    /* Taller for cinematic feel */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 60px;
     z-index: 10000;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
-    /* Subtle divider */
+    box-shadow: none;
     border-bottom: none;
 }
 
@@ -124,36 +168,38 @@ h3 {
     flex: 0 0 auto;
 }
 
+/* Movie Production Logo */
 .logo {
     position: static;
     transform: none;
-    font-size: 2.0rem;
-    font-weight: 400;
-    /* Lighter weight as per screenshot */
-    letter-spacing: 0.05em;
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    color: #1a1a1a !important;
-    /* Black Text */
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-family: var(--font-main);
+    /* Sans-serif for Modern/Minimal look */
+    letter-spacing: 0.2rem;
+    color: #ffffff !important;
+    text-transform: uppercase;
+    opacity: 0.9;
     background: none;
     -webkit-text-fill-color: initial;
     text-shadow: none;
 }
 
 .nav-links a {
-    margin-left: 30px;
+    margin-left: 40px;
     text-decoration: none;
-    color: #1a1a1a;
-    /* Black Text */
+    color: #ffffff;
     font-family: var(--font-main);
-    font-size: 0.9rem;
-    font-weight: 400;
+    font-size: 0.85rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
     transition: opacity 0.3s;
-    opacity: 1;
 }
 
 .nav-links a:hover {
-    opacity: 0.6;
+    opacity: 1;
 }
 
 /* Hero Section */
@@ -163,8 +209,7 @@ h3 {
     justify-content: center;
     align-items: center;
     position: relative;
-    /* Salmon/Pinkish background from screenshot */
-    background-color: #E69A8D;
+    background-color: #121212;
     overflow: hidden;
 }
 
@@ -177,39 +222,78 @@ h3 {
 
 .hero-content {
     text-align: center;
-    z-index: 1;
+    z-index: 20;
+    position: relative;
+    width: 100%;
     animation: none;
     /* Remove tvTurnOn animation */
 }
 
+/* Projector Beam Animation */
 .hero-title {
     font-family: 'Playfair Display', serif;
     font-size: 6rem;
-    /* Large but elegant */
     line-height: 1.1;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-weight: 400;
     font-style: italic;
-    color: #1a1a1a;
-    /* Dark Text */
+    color: transparent;
+    /* Start transparent for effect */
     text-align: center;
     position: relative;
     z-index: 20;
-    opacity: 1;
-    /* Ensure visible */
+
+    /* Animation */
+    animation: projectorBeam 4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+    /* Start hidden */
+}
+
+@keyframes projectorBeam {
+    0% {
+        opacity: 0;
+        color: rgba(255, 255, 255, 0);
+        text-shadow: 0 0 50px rgba(255, 255, 255, 0.8);
+        filter: blur(20px);
+        transform: scale(0.95);
+    }
+
+    30% {
+        opacity: 0.5;
+        color: rgba(255, 255, 255, 0.2);
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.9);
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: 1;
+        color: rgba(255, 255, 255, 0.95);
+        /* Slightly off-white */
+        text-shadow: 0 0 0px rgba(255, 255, 255, 0);
+        filter: blur(0);
+        transform: scale(1);
+    }
 }
 
 .hero-subtitle {
-    font-size: 1.5rem;
-    color: #fff;
-    /* White subtitle on Pink bg looks nice */
+    font-size: 1.1rem;
+    color: #888;
     font-family: var(--font-main);
     font-weight: 300;
-    font-style: italic;
-    margin-top: 10px;
-    z-index: 20;
-    opacity: 1;
-    /* Ensure visible */
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 20px;
+    opacity: 0;
+    animation: simpleFadeIn 2s ease-out forwards;
+    animation-delay: 2.5s;
+    /* Wait for title */
+}
+
+@keyframes simpleFadeIn {
+    to {
+        opacity: 0.7;
+    }
 }
 
 .scroll-indicator {
@@ -234,11 +318,11 @@ h3 {
 
 /* About Section */
 .about-section {
-    background-color: #fcfbf9;
-    /* Clean White/Beige */
-    position: relative;
-    padding: 100px 0;
+    background-color: #161616;
+    /* Slightly lighter dark */
     color: var(--text-color);
+    position: relative;
+    padding: 150px 0;
     background-image: none;
     /* Remove spotlight */
     overflow: visible;
@@ -246,14 +330,13 @@ h3 {
 }
 
 .about-container {
-    display: flex;
-    /* Keep layout */
-    justify-content: space-between;
-    align-items: flex-start;
-    /* Top align */
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 0 5%;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     height: auto;
     /* Revert height */
     min-height: auto;
@@ -262,7 +345,8 @@ h3 {
 
 .about-text-content {
     flex: 1;
-    padding-right: 60px;
+    margin-bottom: 60px;
+    padding-right: 0;
     position: relative;
     z-index: 2;
 }
@@ -270,9 +354,10 @@ h3 {
 .section-title {
     font-family: var(--font-main);
     font-size: 3.5rem;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #fff;
+    text-align: center;
     opacity: 1;
     /* Ensure visible */
 }
@@ -280,11 +365,11 @@ h3 {
 /* Script Style Typography */
 .script-text p {
     font-family: var(--font-main);
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: #333;
+    font-size: 1.3rem;
+    line-height: 2;
+    color: #bbb;
     margin-bottom: 30px;
-    font-weight: 500;
+    font-weight: 300;
     /* Bolder than script */
     letter-spacing: normal;
     /* Revert letter-spacing */
@@ -311,9 +396,9 @@ h3 {
 }
 
 .visual-box {
-    width: 100%;
-    height: 500px;
-    background-color: #eee;
+    width: 300px;
+    height: 400px;
+    background-color: #000;
     /* Light Gray placeholder */
     border-radius: 20px;
     position: relative;
@@ -324,10 +409,11 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
+    border: 1px solid #333;
     /* Remove border */
     transition: none;
     /* Remove transition */
+    opacity: 0.8;
 }
 
 .visual-box:hover {
@@ -362,7 +448,8 @@ h3 {
 
 /* Skills Section */
 .skills-section {
-    background-color: #fff;
+    background-color: #121212;
+    color: var(--text-color);
     position: relative;
     z-index: 1;
     padding: 100px 0;
@@ -373,7 +460,7 @@ h3 {
     font-size: 3rem;
     text-align: center;
     margin-bottom: 60px;
-    color: var(--text-color);
+    color: #fff;
 }
 
 .skills-grid {
@@ -387,19 +474,19 @@ h3 {
 
 .skill-item {
     padding: 15px 40px;
-    border: 1px solid #eee;
+    border: 1px solid #333;
     border-radius: 50px;
     font-size: 1.1rem;
     font-weight: 500;
     transition: all 0.3s ease;
     cursor: default;
-    background: #fff;
-    color: var(--text-secondary);
+    background: #1a1a1a;
+    color: #ccc;
     box-shadow: none;
 }
 
 .skill-item:hover {
-    background-color: #f0f0f0;
+    background: #fff;
     color: #000;
     transform: translateY(-2px);
     box-shadow: none;
@@ -407,7 +494,8 @@ h3 {
 
 /* Projects Section */
 .projects-section {
-    background-color: #FDFBF7;
+    background-color: #121212;
+    color: var(--text-color);
     padding: 100px 0;
 }
 
@@ -416,6 +504,7 @@ h3 {
     font-size: 3rem;
     margin-bottom: 80px;
     text-align: center;
+    color: #fff;
 }
 
 .projects-gallery {
@@ -435,7 +524,7 @@ h3 {
 .project-image {
     width: 100%;
     height: 400px;
-    background-color: #eee;
+    background-color: #222;
     margin-bottom: 20px;
     border-radius: 12px;
     overflow: hidden;
@@ -473,7 +562,7 @@ h3 {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 5px;
-    color: var(--text-color);
+    color: #fff;
     text-decoration: none !important;
     transition: color 0.3s;
 }
@@ -484,7 +573,7 @@ h3 {
 }
 
 .project-info p {
-    color: #666;
+    color: #888;
     font-size: 1rem;
     font-weight: 300;
 }
@@ -493,8 +582,8 @@ h3 {
 .contact-section {
     text-align: center;
     padding: 150px 20px;
-    background-color: #fff;
-    /* Light */
+    background-color: #121212;
+    color: var(--text-color);
     position: relative;
 }
 
@@ -509,7 +598,7 @@ h3 {
     font-family: var(--font-main);
     font-size: 3rem;
     margin-bottom: 20px;
-    color: #1a1a1a;
+    color: #fff;
     background: none;
     -webkit-text-fill-color: initial;
 }
@@ -517,15 +606,14 @@ h3 {
 .contact-content p {
     font-size: 1.1rem;
     margin-bottom: 40px;
-    color: #666;
+    color: #888;
 }
 
 .cta-button {
     display: inline-block;
     padding: 18px 50px;
-    background-color: #1a1a1a;
-    /* Dark Button */
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     font-size: 1.1rem;
     font-weight: 600;
     border-radius: 50px;
@@ -535,7 +623,7 @@ h3 {
 }
 
 .cta-button:hover {
-    background-color: #333;
+    background-color: #ccc;
     transform: translateY(-2px);
 }
 
@@ -547,7 +635,7 @@ h3 {
 }
 
 .social-links a {
-    color: #999;
+    color: #888;
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -591,7 +679,8 @@ footer {
 /* Responsive */
 @media (max-width: 768px) {
     .hero-title {
-        font-size: 3rem;
+        font-size: 3.5rem;
+        line-height: 1.2;
     }
 
     .about-container {
@@ -609,6 +698,11 @@ footer {
 
     .nav-links {
         display: none;
+    }
+
+    .top-bar {
+        padding: 0 20px;
+        height: 80px;
     }
 }
 
