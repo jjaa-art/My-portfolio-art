@@ -187,6 +187,74 @@ const initParallax = () => {
     });
 };
 
+// Text Scatter Effect
+const initScatterText = () => {
+    const targets = document.querySelectorAll('.scatter-text');
+
+    targets.forEach(target => {
+        // Split text into characters
+        const text = target.innerText;
+        target.innerHTML = '';
+
+        // Wrap each character in a span
+        [...text].forEach(char => {
+            const span = document.createElement('span');
+            span.innerText = char;
+            span.classList.add('char');
+            if (char === ' ') span.style.width = '0.3em'; // Preserve space width
+            target.appendChild(span);
+
+            // Add random scatter effect on hover
+            // We use JS to set random values to CSS variables or direct styles for the 'hover' state logic
+            // But since CSS :hover can't easily use random numbers per element without JS pre-calculation,
+            // we'll add event listeners to the PARENT (target) to trigger the children.
+        });
+
+        target.addEventListener('mouseenter', () => {
+            const chars = target.querySelectorAll('.char');
+            chars.forEach(char => {
+                // Random values for scatter
+                // x: -10 to 10px, y: -10 to 10px, rotate: -20 to 20deg
+                const x = (Math.random() - 0.5) * 30;
+                const y = (Math.random() - 0.5) * 30;
+                const r = (Math.random() - 0.5) * 40;
+
+                char.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)`;
+                // Optional: Random color/opacity change
+                // char.style.opacity = 0.7 + Math.random() * 0.3;
+            });
+        });
+
+        target.addEventListener('mouseleave', () => {
+            const chars = target.querySelectorAll('.char');
+            chars.forEach(char => {
+                char.style.transform = 'translate(0, 0) rotate(0)';
+            });
+        });
+    });
+};
+
+// Image Upload Logic
+const initImageUpload = () => {
+    const input = document.getElementById('imageUpload');
+    const visualBox = document.getElementById('visual-box');
+
+    if (input && visualBox) {
+        input.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    visualBox.style.backgroundImage = `url(${event.target.result})`;
+                    // Remove placeholder background color if needed, or let bg-image cover it
+                    visualBox.style.backgroundColor = 'transparent';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+};
+
 // Initialize
 window.addEventListener('load', () => {
     initHeroAnimation();
@@ -194,4 +262,6 @@ window.addEventListener('load', () => {
     initModal();
     initCursor();
     initParallax();
+    initScatterText();
+    initImageUpload();
 });

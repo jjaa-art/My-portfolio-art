@@ -603,3 +603,51 @@ footer {
         display: none;
     }
 }
+
+/* Text Scatter Effect */
+.scatter-text {
+    display: inline-block;
+    cursor: context-menu;
+    /* Hint that it's interactive */
+}
+
+.scatter-text .char {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.3s;
+    will-change: transform;
+}
+
+.scatter-text:hover .char {
+    /* The transform will be set by JS or we can use nth-child for randomness in CSS, 
+       but for true random "scatter", JS is better to set CSS variables or inline styles on hover. 
+       However, the user asked for simple scatter. 
+       Let's use a predefined set of animations or just rely on JS to set the random values. 
+       For now, base styles here. JS will add the random transforms.
+    */
+    color: var(--accent-color);
+}
+
+/* Image Upload Button */
+.upload-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: var(--text-color);
+    color: #fff;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.upload-btn:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.visual-box {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
