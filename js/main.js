@@ -31,28 +31,29 @@ const initHeroAnimation = () => {
 };
 
 // Scroll Animations
+// Scroll Animations (Cinematic Parallax)
 const initScrollAnimations = () => {
-    // About Section
-    gsap.from(".about-text", {
+    // Parallax Effect for About Text (Anti-Gravity floating feel)
+    gsap.to(".parallax-text", {
         scrollTrigger: {
             trigger: ".about-section",
-            start: "top 80%",
-            toggleActions: "play none none reverse"
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.5 // Smooth catch-up
         },
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out"
+        y: -100, // Moves up while scrolling (floating up)
+        ease: "none"
     });
 
-    gsap.from(".visual-box", {
+    // About Visual Entrance
+    gsap.from(".about-visual", {
         scrollTrigger: {
             trigger: ".about-section",
-            start: "top 80%",
+            start: "top 70%",
         },
-        scale: 0.9,
+        y: 100,
         opacity: 0,
-        duration: 1.2,
+        duration: 1.5,
         ease: "power3.out"
     });
 
@@ -81,6 +82,34 @@ const initScrollAnimations = () => {
         stagger: 0.2,
         ease: "power4.out"
     });
+};
+
+// Image Upload Logic (Click Box)
+const initImageUpload = () => {
+    const input = document.getElementById('imageUpload');
+    const visualBox = document.getElementById('visual-box');
+
+    if (input && visualBox) {
+        // Trigger file input when box is clicked
+        visualBox.addEventListener('click', () => {
+            input.click();
+        });
+
+        // Handle file selection
+        input.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    visualBox.style.backgroundImage = `url(${event.target.result})`;
+                    const hint = visualBox.querySelector('.upload-hint');
+                    if (hint) hint.style.display = 'none'; // Hide text
+                    visualBox.style.border = 'none'; // Clean look
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 };
 
 // Modal Logic
