@@ -381,6 +381,53 @@ h3 {
     /* Vignette Spotlight Effect */
     background: url('../assets/cinema-seats.jpg') no-repeat center center/cover;
     position: relative;
+    /* Ensure overflow is hidden so curtains outside bounds are not seen (not strictly necessary with 100% width but good practice) */
+    overflow: hidden;
+}
+
+/* Curtain Styles */
+.curtain-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    /* Above content initially */
+    display: flex;
+    pointer-events: none;
+    /* Allow hovering through to trigger section hover if needed, 
+                             BUT we want the hover to be on the SECTION. 
+                             Pointer events on curtain shouldn't block section hover. */
+}
+
+.curtain-panel {
+    width: 50%;
+    height: 100%;
+    background: url('../assets/red-curtain.jpg') no-repeat center center/cover;
+    position: relative;
+    transition: transform 1.5s ease-in-out;
+    transition-delay: 1s;
+    /* 1 second delay before opening */
+}
+
+.curtain-panel.left {
+    transform-origin: left center;
+}
+
+.curtain-panel.right {
+    transform-origin: right center;
+    background-position: right center;
+    /* Align texture */
+}
+
+/* Trigger on Section Hover */
+.about-section:hover .curtain-panel.left {
+    transform: translateX(-100%);
+}
+
+.about-section:hover .curtain-panel.right {
+    transform: translateX(100%);
 }
 
 /* Optional Overlay for readability if needed */
@@ -455,6 +502,8 @@ h3 {
     flex-direction: column;
     justify-content: center;
     gap: 2rem;
+    padding-top: 50px;
+    /* Move text down */
     /* Top, Middle, Bottom alignment */
 }
 
