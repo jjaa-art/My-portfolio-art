@@ -240,7 +240,47 @@ const initScatterText = () => {
     });
 };
 
-// Image Upload Logic removed (Duplicate)
+// Project Card Image Upload Logic
+const initProjectCardUpload = () => {
+    const projectCards = document.querySelectorAll('.project-card');
+
+    projectCards.forEach(card => {
+        const fileInput = card.querySelector('.project-upload');
+        // The project-image div is where we want to set the background
+        const projectImage = card.querySelector('.project-image');
+
+        if (fileInput && projectImage) {
+            // Trigger file input on card click
+            card.addEventListener('click', (e) => {
+                // Prevent triggering if clicked on info text (optional, but good UX)
+                fileInput.click();
+            });
+
+            // Handle file selection
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = (event) => {
+                        // Set the uploaded image as background
+                        projectImage.style.backgroundImage = `url('${event.target.result}')`;
+                        projectImage.style.backgroundSize = 'cover';
+                        projectImage.style.backgroundPosition = 'center';
+                        projectImage.style.backgroundColor = 'transparent'; // Remove placeholder color
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Stop propagation to prevent infinite loop (input click bubbling to card click)
+            fileInput.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
+    });
+};
 
 // Initialize
 window.addEventListener('load', () => {
@@ -251,4 +291,5 @@ window.addEventListener('load', () => {
     initParallax();
     initScatterText(); // Enabled smoke effect
     initImageUpload();
+    initProjectCardUpload(); // Init Project Uploads
 });
