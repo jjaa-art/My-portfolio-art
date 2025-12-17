@@ -411,8 +411,6 @@ h3 {
     flex: 1;
     height: 400px;
     /* Exact match to visual-box */
-    display: flex;
-    flex-direction: column;
     position: relative;
     z-index: 2;
     text-align: left;
@@ -433,6 +431,15 @@ h3 {
 
 /* Script Style Typography */
 /* Script Style Typography */
+.script-text {
+    height: 100%;
+    /* Fill the 400px parent */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Top, Middle, Bottom alignment */
+}
+
 .script-text p {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.25rem;
@@ -440,8 +447,8 @@ h3 {
     line-height: 1.8;
     /* Tighter leading */
     color: #cccccc;
-    margin-bottom: 15px;
-    /* Compact spacing */
+    margin: 0;
+    /* Let flex justify-content handle spacing */
     font-weight: 300;
     font-style: italic;
     opacity: 0.9;
