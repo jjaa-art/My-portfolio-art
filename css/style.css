@@ -810,8 +810,8 @@ h3 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    /* Darken wall for focus on cards */
+    background: rgba(0, 0, 0, 0.4);
+    /* Less darkness for better visibility */
     z-index: 0;
 }
 
@@ -848,13 +848,12 @@ h3 {
 .project-card {
     position: relative;
     cursor: pointer;
-    background: #111;
+    background: #1a1a1a;
     aspect-ratio: 16/9;
-    /* More vivid shadow and subtle gold border hint for sharpness */
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    /* Subtle gold frame hint */
+    /* Glow and sharp gold border */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8),
+        0 0 15px rgba(212, 175, 55, 0.3);
+    border: 3px solid #d4af37;
     border-radius: 4px;
     overflow: hidden;
     perspective: 1500px;
@@ -876,18 +875,22 @@ h3 {
     animation-delay: -3s;
 }
 
-/* Gold Frame Portal Overlay */
+/* Gold Frame Portal Overlay - Now with a hole to show the image */
 .frame-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -3px;
+    /* Align with thicker border */
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
     background: url('../assets/gold-frame.jpg') no-repeat center center/cover;
     z-index: 3;
     pointer-events: none;
     transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1),
         opacity 0.8s ease-in-out;
+    /* Punch out the center of the frame so the image is visible */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%,
+            15% 15%, 15% 85%, 85% 85%, 85% 15%, 15% 15%);
 }
 
 .project-image {

@@ -265,7 +265,11 @@ const initProjectCardUpload = () => {
                     const reader = new FileReader();
                     reader.onload = (event) => {
                         const imageData = event.target.result;
+
+                        // Apply immediately to the UI
                         projectImage.style.backgroundImage = `url('${imageData}')`;
+                        projectImage.style.backgroundSize = 'cover';
+                        projectImage.style.backgroundPosition = 'center';
                         projectImage.style.backgroundColor = 'transparent';
 
                         // Save to localStorage
