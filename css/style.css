@@ -849,69 +849,86 @@ h3 {
     position: relative;
     cursor: pointer;
     background: #000;
-    /* Movie Poster Ratio / Wide Screen */
     aspect-ratio: 16/9;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    /* Thin subtle border initially */
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-    /* Deep shadow - lifting off wall */
     border-radius: 4px;
-    /* Slight rounding like a screen */
     overflow: hidden;
-    transition: all 0.5s ease-out;
+    perspective: 1500px;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
 
-    /* Anti-Gravity Float Animation (Default) */
+    /* Preserve floating animation */
     animation: floatingCard 6s ease-in-out infinite alternate;
 }
 
-/* Staggered / Diagonal Layout via Rotation */
+/* Diagonal Layout */
 .project-card:nth-child(odd) {
     transform: rotate(-2deg);
-    margin-top: 0;
     animation-delay: 0s;
 }
 
 .project-card:nth-child(even) {
     transform: rotate(2deg);
     margin-top: 50px;
-    /* Stagger vertical */
     animation-delay: -3s;
 }
 
-/* Hover: Focus / Landing */
-.project-card:hover {
-    transform: scale(1.05) rotate(0deg) !important;
-    /* Land and zoom slightly */
-    border-color: #d4af37;
-    /* Gold border on highlight */
-    box-shadow: 0 30px 60px rgba(212, 175, 55, 0.2);
-    /* Golden glow shadow */
-    z-index: 10;
-    animation-play-state: paused;
+/* Gold Frame Portal Overlay */
+.frame-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/gold-frame.jpg') no-repeat center center/cover;
+    z-index: 3;
+    pointer-events: none;
+    transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1),
+        opacity 0.8s ease-in-out;
 }
 
 .project-image {
     width: 100%;
     height: 100%;
-    /* Fill container */
-    background-color: #222;
-    margin-bottom: 0;
-    border-radius: 0;
-    overflow: hidden;
-    position: relative;
+    background-color: #1a1a1a;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1.5s cubic-bezier(0.2, 0, 0.2, 1);
+    z-index: 1;
+    transform: scale(0.9);
+    /* Portal content starts slightly deep */
 }
 
-/* Info Overlay (Cinematic lower third) */
+/* Hover: Sucking into the portal */
+.project-card:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+    z-index: 10;
+    animation-play-state: paused;
+}
+
+.project-card:hover .frame-overlay {
+    transform: scale(4) translateZ(200px);
+    /* Suck past viewer */
+    opacity: 0;
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.1);
+    /* Zoom content forward */
+}
+
+/* Info Overlay */
 .project-info {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 20px;
+    padding: 30px;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+    color: #fff;
     transform: translateY(100%);
-    /* Hidden initially or show minimal? Let's hide and reveal */
-    transition: transform 0.4s ease;
+    transition: transform 0.6s ease-out;
+    z-index: 4;
 }
 
 .project-card:hover .project-info {
