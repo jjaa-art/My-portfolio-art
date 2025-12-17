@@ -384,21 +384,27 @@ h3 {
 
 .about-container {
     max-width: 1200px;
-    /* Wider for side-by-side */
     margin: 0 auto;
     padding: 0 40px;
     display: flex;
-    flex-direction: row-reverse;
-    /* Image Left (HTML: Text, Image) */
+    flex-direction: column;
+    /* Stack Title on top */
     align-items: center;
-    justify-content: space-between;
-    text-align: left;
-    /* Align text left */
-    gap: 60px;
-    /* Space between textual and visual */
+    /* Center Title */
     height: auto;
     min-height: 80vh;
-    /* Occupy good screen real estate */
+}
+
+.about-content-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    /* Image Left (Visual is 2nd in HTML) -> No wait. 
+                                     HTML: Text(1), Visual(2). 
+                                     Row-Reverse: Visual(Left), Text(Right). Correct. */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 60px;
 }
 
 .about-text-content {
@@ -407,10 +413,6 @@ h3 {
     /* Exact match to visual-box */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    /* Top title, Bottom text */
-    margin-bottom: 0;
-    padding-right: 0;
     position: relative;
     z-index: 2;
     text-align: left;
@@ -418,14 +420,14 @@ h3 {
 
 .section-title {
     font-family: var(--font-main);
-    font-size: 3rem;
-    /* Slightly smaller to fit */
-    line-height: 1;
-    margin-bottom: 0;
-    /* Remove spacing handled by flex */
+    font-size: 3.5rem;
+    /* Restore size for prominence */
+    margin-bottom: 60px;
+    /* Space below title */
     font-weight: 600;
     color: #fff;
-    text-align: left;
+    text-align: center;
+    /* Center align */
     opacity: 1;
 }
 
@@ -746,29 +748,27 @@ footer {
         line-height: 1.2;
     }
 
-    .about-container {
-        flex-direction: column;
-    }
-
-    .about-text-content {
-        padding-right: 0;
-        margin-bottom: 40px;
-    }
-
     .navbar {
         padding: 20px;
     }
 
-    .about-container {
+    .about-content-wrapper {
         flex-direction: column;
-        /* Stack vertically on mobile */
+        /* Stack content vertically */
         text-align: center;
     }
 
-    .section-title,
     .about-text-content {
+        height: auto;
+        /* Allow auto height on mobile */
+        margin-bottom: 40px;
         text-align: center;
-        /* Center on mobile */
+        align-items: center;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
     }
 
     .nav-links {
