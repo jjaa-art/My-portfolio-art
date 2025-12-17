@@ -710,22 +710,11 @@ footer {
 }
 
 /* Clean up unused animations */
+/* Hero Title Particles */
 .hero-title .char {
     display: inline-block;
-    transition: none;
-    /* Remove transition */
-    will-change: auto;
-    /* Revert will-change */
-    color: var(--text-color);
-    /* Revert color */
-}
-
-.hero-title.scatter-active .char {
-    /* Keep simple color change if desired, or remove */
-    color: inherit;
-    text-shadow: none;
-    opacity: 1;
-    filter: none;
+    color: #ffffff;
+    /* Ensure white by default */
 }
 
 /* Responsive */

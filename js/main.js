@@ -168,89 +168,74 @@ const initParallax = () => {
 };
 
 // Text Scatter Effect
+// Text Scatter Effect (Smoke/Disappear)
 const initScatterText = () => {
-    // 1. General Scatter (About, Skills, etc.) - Existing Logic
-    const generalTargets = document.querySelectorAll('.scatter-text');
-    generalTargets.forEach(target => {
-        const text = target.innerText;
-        target.innerHTML = '';
-        [...text].forEach(char => {
-            const span = document.createElement('span');
-            span.innerText = char;
-            span.classList.add('char');
-            if (char === ' ') span.style.width = '0.3em';
-            target.appendChild(span);
-        });
-        target.addEventListener('mouseenter', () => {
-            target.querySelectorAll('.char').forEach(char => {
-                const x = (Math.random() - 0.5) * 30;
-                const y = (Math.random() - 0.5) * 30;
-                const r = (Math.random() - 0.5) * 40;
-                char.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)`;
-            });
-        });
-        target.addEventListener('mouseleave', () => {
-            target.querySelectorAll('.char').forEach(char => {
-                char.style.transform = 'translate(0, 0) rotate(0)';
-            });
+    const heroTitleContainer = document.querySelector('.hero-title');
+    if (!heroTitleContainer) return;
+
+    // Split text into characters
+    const originalContent = Array.from(heroTitleContainer.childNodes);
+    heroTitleContainer.innerHTML = '';
+
+    originalContent.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent.trim();
+            if (text) {
+                [...text].forEach(char => {
+                    const span = document.createElement('span');
+                    span.innerText = char;
+                    span.classList.add('char');
+                    span.style.display = 'inline-block'; // Required for transform
+                    span.style.willChange = 'transform, opacity, filter';
+                    if (char === ' ') span.style.width = '0.3em';
+                    heroTitleContainer.appendChild(span);
+                });
+            }
+        } else if (node.nodeName === 'BR') {
+            heroTitleContainer.appendChild(document.createElement('br'));
+        } else {
+            heroTitleContainer.appendChild(node.cloneNode(true));
+        }
+    });
+
+    const chars = heroTitleContainer.querySelectorAll('.char');
+
+    // Hover Interaction
+    heroTitleContainer.addEventListener('mouseenter', () => {
+        gsap.to(chars, {
+            duration: 1.5,
+            x: () => (Math.random() - 0.5) * 80, // Horizontal drift
+            y: () => -150 - Math.random() * 100, // Move Up (Smoke rises)
+            rotation: () => (Math.random() - 0.5) * 90,
+            scale: () => 1.5 + Math.random(), // Expand like smoke
+            opacity: 0,
+            filter: "blur(15px)", // Blur out
+            ease: "power2.out",
+            stagger: {
+                amount: 0.5,
+                from: "random"
+            },
+            overwrite: true
         });
     });
 
-    // 2. Burning Text Effect (Hero Title)
-    const heroTitleContainer = document.querySelector('.hero-title');
-    if (heroTitleContainer) {
-        // Prepare text - handle <br> and mixed content
-        const originalContent = Array.from(heroTitleContainer.childNodes);
-        heroTitleContainer.innerHTML = ''; // Clear content
-
-        originalContent.forEach(node => {
-            if (node.nodeType === Node.TEXT_NODE) {
-                const text = node.textContent.trim();
-                if (text) {
-                    [...text].forEach(char => {
-                        const span = document.createElement('span');
-                        span.innerText = char;
-                        span.classList.add('char');
-                        if (char === ' ') span.style.width = '0.3em';
-                        heroTitleContainer.appendChild(span);
-                    });
-                }
-            } else if (node.nodeName === 'BR') {
-                heroTitleContainer.appendChild(document.createElement('br'));
-            } else {
-                // If it's another element (like span), keep it or process recursively
-                // For simplicity, treating as text container or appending directly
-                heroTitleContainer.appendChild(node.cloneNode(true));
-            }
+    heroTitleContainer.addEventListener('mouseleave', () => {
+        gsap.to(chars, {
+            duration: 1,
+            x: 0,
+            y: 0,
+            rotation: 0,
+            scale: 1,
+            opacity: 1,
+            filter: "blur(0px)",
+            ease: "back.out(1.7)", // Fun snap back
+            stagger: {
+                amount: 0.3,
+                from: "start"
+            },
+            overwrite: true
         });
-
-        // Hover Effect - Fire/Smoke Simulation
-        heroTitleContainer.addEventListener('mouseenter', () => {
-            heroTitleContainer.classList.add('scatter-active');
-            const chars = heroTitleContainer.querySelectorAll('.char');
-            chars.forEach(char => {
-                // Smoke logic: Strong upward movement, slight drift
-                const x = (Math.random() - 0.5) * 60; // Narrower horizontal drift
-                const y = -100 - Math.random() * 100; // Move UP (-100 to -200px)
-                const r = (Math.random() - 0.5) * 45; // Slight rotation
-                const scale = 1 + Math.random() * 0.5; // Expand slightly like gas
-
-                char.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(${scale})`;
-                char.style.opacity = 0; // Fade out like smoke
-                char.style.filter = 'blur(10px)'; // Blur like smoke
-            });
-        });
-
-        heroTitleContainer.addEventListener('mouseleave', () => {
-            heroTitleContainer.classList.remove('scatter-active');
-            const chars = heroTitleContainer.querySelectorAll('.char');
-            chars.forEach(char => {
-                char.style.transform = 'translate(0, 0) rotate(0) scale(1)';
-                char.style.opacity = 1;
-                char.style.filter = 'blur(0)';
-            });
-        });
-    }
+    });
 };
 
 // Image Upload Logic removed (Duplicate)
@@ -262,6 +247,6 @@ window.addEventListener('load', () => {
 
     initCursor();
     initParallax();
-    // initScatterText(); // DISABLED: Causing visibility issues
+    initScatterText(); // Enabled smoke effect
     initImageUpload();
 });
