@@ -848,14 +848,17 @@ h3 {
 .project-card {
     position: relative;
     cursor: pointer;
-    background: #000;
+    background: #111;
     aspect-ratio: 16/9;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    /* More vivid shadow and subtle gold border hint for sharpness */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    /* Subtle gold frame hint */
     border-radius: 4px;
     overflow: hidden;
     perspective: 1500px;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    border: none;
 
     /* Preserve floating animation */
     animation: floatingCard 6s ease-in-out infinite alternate;
@@ -895,8 +898,8 @@ h3 {
     background-position: center;
     transition: transform 1.5s cubic-bezier(0.2, 0, 0.2, 1);
     z-index: 1;
-    transform: scale(0.9);
-    /* Portal content starts slightly deep */
+    transform: scale(1);
+    /* Sharp initial state (removed 0.9 reduction) */
 }
 
 /* Hover: Sucking into the portal */

@@ -241,43 +241,45 @@ const initScatterText = () => {
 };
 
 // Project Card Image Upload Logic
+// Project Card Image Upload Logic with Persistence
 const initProjectCardUpload = () => {
     const projectCards = document.querySelectorAll('.project-card');
 
-    projectCards.forEach(card => {
-        const fileInput = card.querySelector('.project-upload');
-        // The project-image div is where we want to set the background
+    // Load saved images from localStorage
+    projectCards.forEach((card, index) => {
         const projectImage = card.querySelector('.project-image');
+        const savedImage = localStorage.getItem(`project_image_${index}`);
 
+        if (savedImage && projectImage) {
+            projectImage.style.backgroundImage = `url('${savedImage}')`;
+            projectImage.style.backgroundColor = 'transparent';
+        }
+
+        const fileInput = card.querySelector('.project-upload');
         if (fileInput && projectImage) {
-            // Trigger file input on card click
-            card.addEventListener('click', (e) => {
-                // Prevent triggering if clicked on info text (optional, but good UX)
-                fileInput.click();
-            });
+            card.addEventListener('click', () => fileInput.click());
 
-            // Handle file selection
             fileInput.addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-
                     reader.onload = (event) => {
-                        // Set the uploaded image as background
-                        projectImage.style.backgroundImage = `url('${event.target.result}')`;
-                        projectImage.style.backgroundSize = 'cover';
-                        projectImage.style.backgroundPosition = 'center';
-                        projectImage.style.backgroundColor = 'transparent'; // Remove placeholder color
-                    };
+                        const imageData = event.target.result;
+                        projectImage.style.backgroundImage = `url('${imageData}')`;
+                        projectImage.style.backgroundColor = 'transparent';
 
+                        // Save to localStorage
+                        try {
+                            localStorage.setItem(`project_image_${index}`, imageData);
+                        } catch (err) {
+                            console.warn("Storage limit might be exceeded for high-res images.");
+                        }
+                    };
                     reader.readAsDataURL(file);
                 }
             });
 
-            // Stop propagation to prevent infinite loop (input click bubbling to card click)
-            fileInput.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
+            fileInput.addEventListener('click', (e) => e.stopPropagation());
         }
     });
 };
