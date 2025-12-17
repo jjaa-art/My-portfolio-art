@@ -403,8 +403,13 @@ h3 {
 
 .about-text-content {
     flex: 1;
+    height: 400px;
+    /* Exact match to visual-box */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Top title, Bottom text */
     margin-bottom: 0;
-    /* Remove bottom margin */
     padding-right: 0;
     position: relative;
     z-index: 2;
@@ -413,12 +418,14 @@ h3 {
 
 .section-title {
     font-family: var(--font-main);
-    font-size: 3.5rem;
-    margin-bottom: 50px;
+    font-size: 3rem;
+    /* Slightly smaller to fit */
+    line-height: 1;
+    margin-bottom: 0;
+    /* Remove spacing handled by flex */
     font-weight: 600;
     color: #fff;
     text-align: left;
-    /* Align left */
     opacity: 1;
 }
 
@@ -426,17 +433,22 @@ h3 {
 /* Script Style Typography */
 .script-text p {
     font-family: 'Cormorant Garamond', serif;
-    /* Cinematic Font */
-    font-size: 1.8rem;
-    line-height: 2.4;
-    /* Wide leading for script feel */
+    font-size: 1.25rem;
+    /* Reduced size */
+    line-height: 1.8;
+    /* Tighter leading */
     color: #cccccc;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
+    /* Compact spacing */
     font-weight: 300;
     font-style: italic;
     opacity: 0.9;
     max-width: 600px;
-    /* Limit width for reading */
+}
+
+.script-text p:last-child {
+    margin-bottom: 0;
+    /* Align flush bottom */
 }
 
 .script-text strong {
