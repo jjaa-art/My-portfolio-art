@@ -369,16 +369,17 @@ h3 {
 }
 
 /* About Section */
+/* About Section - Cinematic Prologue */
 .about-section {
-    background-color: #161616;
-    /* Slightly lighter dark */
+    background-color: #000000;
+    /* Deep Black Base */
     color: var(--text-color);
     position: relative;
-    padding: 150px 0;
-    background-image: none;
-    /* Remove spotlight */
-    overflow: visible;
-    /* Revert overflow */
+    padding: 200px 0;
+    /* More breathing room */
+    overflow: hidden;
+    /* Vignette Spotlight Effect */
+    background-image: radial-gradient(circle at 30% 50%, rgba(30, 30, 30, 1) 0%, rgba(0, 0, 0, 1) 70%);
 }
 
 .about-container {
@@ -415,18 +416,20 @@ h3 {
 }
 
 /* Script Style Typography */
+/* Script Style Typography */
 .script-text p {
-    font-family: var(--font-main);
-    font-size: 1.3rem;
-    line-height: 2;
-    color: #bbb;
-    margin-bottom: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    /* Cinematic Font */
+    font-size: 1.8rem;
+    line-height: 2.4;
+    /* Wide leading for script feel */
+    color: #cccccc;
+    margin-bottom: 50px;
     font-weight: 300;
-    /* Bolder than script */
-    letter-spacing: normal;
-    /* Revert letter-spacing */
-    opacity: 1;
-    /* Ensure visible */
+    font-style: italic;
+    opacity: 0.9;
+    max-width: 600px;
+    /* Limit width for reading */
 }
 
 .script-text strong {
@@ -461,11 +464,11 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #333;
-    /* Remove border */
-    transition: none;
-    /* Remove transition */
+    border: 1px solid #222;
+    transition: all 0.5s ease;
     opacity: 0.8;
+    filter: grayscale(100%) contrast(1.2);
+    /* Monotone / Noir feel */
 }
 
 .visual-box:hover {

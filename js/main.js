@@ -33,28 +33,30 @@ const initHeroAnimation = () => {
 // Scroll Animations
 // Scroll Animations (Cinematic Parallax)
 const initScrollAnimations = () => {
-    // Parallax Effect for About Text (Anti-Gravity floating feel)
+    // Parallax Effect for About Text (Floating/Anti-Gravity)
     gsap.to(".parallax-text", {
         scrollTrigger: {
             trigger: ".about-section",
             start: "top bottom",
             end: "bottom top",
-            scrub: 1.5 // Smooth catch-up
+            scrub: 1.2
         },
-        y: -100, // Moves up while scrolling (floating up)
-        ease: "none"
+        y: -150, // Floating Up significantly
+        opacity: 0.8, // Fade out slightly at top for depth
+        ease: "none",
+        overwrite: 'auto'
     });
 
-    // About Visual Entrance
+    // About Visual Entrance (Keep as is, but improved easing)
     gsap.from(".about-visual", {
         scrollTrigger: {
             trigger: ".about-section",
-            start: "top 70%",
+            start: "top 75%", // Trigger slightly earlier
         },
         y: 100,
         opacity: 0,
-        duration: 1.5,
-        ease: "power3.out"
+        duration: 2,
+        ease: "power2.out"
     });
 
     // Skills
